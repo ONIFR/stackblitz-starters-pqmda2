@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const HomePage = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [isWalletInstalled, setIsWalletInstalled] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const checkWeb3Availability = async () => {
@@ -49,6 +51,12 @@ const HomePage = () => {
     }
   };
 
+  useEffect(() => {
+    if (isConnected) {
+      router.push('/team');
+    }
+  }, [isConnected, router]);
+
   return (
     <div>
       {!isConnected && (
@@ -63,10 +71,6 @@ const HomePage = () => {
             <button onClick={connectWallet}>Connectez votre wallet</button>
           )}
         </>
-      )}
-
-      {isConnected && (
-        <p>Vous êtes connecté !</p>
       )}
     </div>
   );
