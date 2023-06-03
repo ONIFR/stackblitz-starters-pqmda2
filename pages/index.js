@@ -16,7 +16,12 @@ const HomePage = () => {
     const checkConnection = async () => {
       try {
         if (window.ethereum && window.ethereum.selectedAddress) {
-          setIsConnected(true);
+          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+          if (accounts && accounts.length > 0) {
+            setIsConnected(true);
+          } else {
+            setIsConnected(false);
+          }
         } else {
           setIsConnected(false);
         }
@@ -68,4 +73,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
