@@ -60,7 +60,7 @@ const TeamPage = () => {
               className="team-image"
               style={{ width: '40%', height: 'auto' }}
             />
-            <br />
+            
             <button className="team-button" onClick={() => confirmTeamSelection('Frogz')}>
               Choose this team
             </button>
@@ -73,7 +73,7 @@ const TeamPage = () => {
               className="team-image"
               style={{ width: '40%', height: 'auto' }}
             />
-            <br />
+            
             <button className="team-button" onClick={() => confirmTeamSelection('Monkz')}>
               Choose this team
             </button>
@@ -86,7 +86,7 @@ const TeamPage = () => {
               className="team-image"
               style={{ width: '40%', height: 'auto' }}
             />
-            <br />
+            
             <button className="team-button" onClick={() => confirmTeamSelection('Shibz')}>
               Choose this team
             </button>
