@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
 const HomePage = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [isWalletInstalled, setIsWalletInstalled] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const checkWeb3Availability = async () => {
@@ -38,7 +36,6 @@ const HomePage = () => {
       if (window.ethereum) {
         await window.ethereum.request({ method: 'eth_requestAccounts' });
         setIsConnected(true);
-        router.push('/team');
       } else {
         console.error('Metamask is not installed');
       }
@@ -49,17 +46,26 @@ const HomePage = () => {
 
   return (
     <div>
-      {!isWalletInstalled && (
-        <p>
-          Vous devez télécharger un wallet ETH pour jouer. Téléchargez-en un depuis le site officiel d'Ethereum.
-        </p>
+      {!isConnected && (
+        <>
+          {!isWalletInstalled && (
+            <p>
+              Vous devez télécharger un wallet ETH pour jouer. Téléchargez-en un depuis le site officiel d'Ethereum.
+            </p>
+          )}
+
+          {isWalletInstalled && (
+            <button onClick={connectWallet}>Connectez votre wallet</button>
+          )}
+        </>
       )}
 
-      {isWalletInstalled && !isConnected && (
-        <button onClick={connectWallet}>Connectez votre wallet</button>
+      {isConnected && (
+        <p>Vous êtes connecté !</p>
       )}
     </div>
   );
 };
 
 export default HomePage;
+
