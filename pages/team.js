@@ -59,7 +59,7 @@ const TeamPage = () => {
             alt="Frogz"
             className="team-image"
           />
-          
+          <br />
           <button className="team-button" onClick={() => confirmTeamSelection('Frogz')}>
             Join the team
           </button>
@@ -71,7 +71,7 @@ const TeamPage = () => {
             alt="Monkz"
             className="team-image"
           />
-          
+          <br />
           <button className="team-button" onClick={() => confirmTeamSelection('Monkz')}>
             Join the team
           </button>
@@ -83,7 +83,7 @@ const TeamPage = () => {
             alt="Shibz"
             className="team-image"
           />
-          
+          <br />
           <button className="team-button" onClick={() => confirmTeamSelection('Shibz')}>
             Join the team
           </button>
