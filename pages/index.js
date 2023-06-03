@@ -8,11 +8,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const checkWeb3Availability = async () => {
-      if (typeof window.ethereum !== 'undefined') {
-        setIsWalletInstalled(true);
-      } else {
-        setIsWalletInstalled(false);
-      }
+      setIsWalletInstalled(!!window.ethereum);
     };
 
     checkWeb3Availability();
@@ -21,8 +17,7 @@ const HomePage = () => {
   useEffect(() => {
     const checkConnection = async () => {
       try {
-        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-        if (accounts && accounts.length > 0) {
+        if (window.ethereum && window.ethereum.selectedAddress) {
           setIsConnected(true);
         } else {
           setIsConnected(false);
@@ -40,7 +35,7 @@ const HomePage = () => {
 
   const connectWallet = async () => {
     try {
-      if (typeof window.ethereum !== 'undefined') {
+      if (window.ethereum) {
         await window.ethereum.request({ method: 'eth_requestAccounts' });
         setIsConnected(true);
         router.push('/team');
