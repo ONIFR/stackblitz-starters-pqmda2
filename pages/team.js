@@ -1,6 +1,41 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+function appendScript(src) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.body.appendChild(script);
+  });
+}
+
+// Chargez le SDK Firebase en utilisant la fonction appendScript
+appendScript('https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js')
+  .then(() => appendScript('https://www.gstatic.com/firebasejs/9.6.4/firebase-database.js'))
+  .then(() => {
+    // Ici, vous pouvez initialiser Firebase et utiliser ses fonctionnalités
+    const firebaseConfig = {
+      apiKey: "AIzaSyBcWPwQu2a1Kgx6LSg3e2s4yvzLKfSB0Jw",
+      authDomain: "theboringcube-f508a.firebaseapp.com",
+      databaseURL: "https://theboringcube-f508a-default-rtdb.firebaseio.com",
+      projectId: "theboringcube-f508a",
+      storageBucket: "theboringcube-f508a.appspot.com",
+      messagingSenderId: "1022151595258",
+      appId: "1:1022151595258:web:75f874855c2a887fb32543",
+      measurementId: "G-YYN18C1SR5"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    // Le reste de votre code JavaScript
+  })
+  .catch((error) => {
+    console.error('Erreur lors du chargement du SDK Firebase:', error);
+  });
+
+
 const TeamPage = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [isWalletInstalled, setIsWalletInstalled] = useState(false);
