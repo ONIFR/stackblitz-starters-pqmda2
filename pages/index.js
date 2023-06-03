@@ -6,22 +6,30 @@ const HomePage = () => {
   const [isWalletInstalled, setIsWalletInstalled] = useState(false);
   const router = useRouter();
 
-  // Vérifier si un wallet ETH est installé
   useEffect(() => {
-    // Vérifier si Web3 est disponible dans le navigateur
-    const isWeb3Available = typeof window.ethereum !== 'undefined';
-    setIsWalletInstalled(isWeb3Available);
+    const checkWeb3Availability = async () => {
+      if (typeof window.ethereum !== 'undefined') {
+        setIsWalletInstalled(true);
+      } else {
+        setIsWalletInstalled(false);
+      }
+    };
+
+    checkWeb3Availability();
   }, []);
 
-  // Vérifier l'état de connexion
   useEffect(() => {
-    // Vérifier si l'utilisateur est connecté
     const checkConnection = async () => {
       try {
         const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-        setIsConnected(accounts.length > 0);
+        if (accounts && accounts.length > 0) {
+          setIsConnected(true);
+        } else {
+          setIsConnected(false);
+        }
       } catch (error) {
         console.error(error);
+        setIsConnected(false);
       }
     };
 
@@ -30,22 +38,19 @@ const HomePage = () => {
     }
   }, [isWalletInstalled]);
 
-  // Gestion de la connexion du wallet
   const connectWallet = async () => {
     try {
-      // Demander à l'utilisateur de se connecter
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-      setIsConnected(true);
+      if (typeof window.ethereum !== 'undefined') {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setIsConnected(true);
+        router.push('/team');
+      } else {
+        console.error('Metamask is not installed');
+      }
     } catch (error) {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    if (isConnected) {
-      router.push('/team'); // Redirection vers la page 'team.js'
-    }
-  }, [isConnected, router]);
 
   return (
     <div>
