@@ -1,59 +1,65 @@
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
-export default function Home() {
+const HomePage = () => {
+  const [isConnected, setIsConnected] = useState(false);
+  const [isWalletInstalled, setIsWalletInstalled] = useState(false);
+  const router = useRouter();
+
+  // Vérifier si un wallet ETH est installé
+  useEffect(() => {
+    // Vérifier si Web3 est disponible dans le navigateur
+    const isWeb3Available = typeof window.ethereum !== 'undefined';
+    setIsWalletInstalled(isWeb3Available);
+  }, []);
+
+  // Vérifier l'état de connexion
+  useEffect(() => {
+    // Vérifier si l'utilisateur est connecté
+    const checkConnection = async () => {
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        setIsConnected(accounts.length > 0);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (isWalletInstalled) {
+      checkConnection();
+    }
+  }, [isWalletInstalled]);
+
+  // Gestion de la connexion du wallet
+  const connectWallet = async () => {
+    try {
+      // Demander à l'utilisateur de se connecter
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      setIsConnected(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isConnected) {
+      router.push('/team'); // Redirection vers la page 'team.js'
+    }
+  }, [isConnected, router]);
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+    <div>
+      {!isWalletInstalled && (
+        <p>
+          Vous devez télécharger un wallet ETH pour jouer. Téléchargez-en un depuis le site officiel d'Ethereum.
         </p>
+      )}
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a href="https://next.new" target="_blank" rel="noopener noreferrer">
-          Created with&nbsp;<b>next.new</b>&nbsp;⚡️
-        </a>
-      </footer>
+      {isWalletInstalled && !isConnected && (
+        <button onClick={connectWallet}>Connectez votre wallet</button>
+      )}
     </div>
   );
-}
+};
+
+export default HomePage;
