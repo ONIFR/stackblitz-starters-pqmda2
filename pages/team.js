@@ -1,4 +1,4 @@
-import firebase from '../api/firebase'; // Chemin vers le fichier firebase.js
+
 
 const TeamPage = () => {
   // ...
