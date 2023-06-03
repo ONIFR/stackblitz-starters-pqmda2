@@ -53,7 +53,7 @@ const TeamPage = () => {
 
   useEffect(() => {
     if (!window.ethereum || !window.ethereum.selectedAddress) {
-      router.push('./index');
+      router.push('https://stackblitzstarterspqmda2-oqiw--3000--e0a2bd6c.local-credentialless.webcontainer.io/');
     }
   }, [router]);
 
