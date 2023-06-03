@@ -53,7 +53,7 @@ const TeamPage = () => {
 
   useEffect(() => {
     if (!window.ethereum || !window.ethereum.selectedAddress) {
-      router.push('/index');
+      router.push('./index');
     }
   }, [router]);
 
