@@ -15,14 +15,7 @@ const TeamPage = () => {
       databaseScript.onload = () => {
         // Initialiser Firebase avec vos informations de configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyBcWPwQu2a1Kgx6LSg3e2s4yvzLKfSB0Jw",
-  authDomain: "theboringcube-f508a.firebaseapp.com",
-  databaseURL: "https://theboringcube-f508a-default-rtdb.firebaseio.com",
-  projectId: "theboringcube-f508a",
-  storageBucket: "theboringcube-f508a.appspot.com",
-  messagingSenderId: "1022151595258",
-  appId: "1:1022151595258:web:75f874855c2a887fb32543",
-  measurementId: "G-YYN18C1SR5"
+          // Vos informations de configuration Firebase
         };
 
         firebase.initializeApp(firebaseConfig);
@@ -34,26 +27,30 @@ const TeamPage = () => {
   }, []);
 
   const confirmTeamSelection = (teamName) => {
-    // Enregistrer le choix de l'utilisateur dans la base de données Firebase
-    const userAddress = window.ethereum.selectedAddress; // Adresse ETH de l'utilisateur
+    const confirmation = window.confirm('Voulez-vous rejoindre cette équipe ?');
 
-    if (firebaseLoaded) {
-      const database = firebase.database();
-      database.ref('users/' + userAddress).set({
-        team: teamName
-      })
-        .then(() => {
-          console.log('Choix de l\'équipe enregistré dans la base de données Firebase');
+    if (confirmation) {
+      // Enregistrer le choix de l'utilisateur dans la base de données Firebase
+      const userAddress = window.ethereum.selectedAddress; // Adresse ETH de l'utilisateur
+
+      if (firebaseLoaded) {
+        const database = firebase.database();
+        database.ref('users/' + userAddress).set({
+          team: teamName
         })
-        .catch((error) => {
-          console.error('Erreur lors de l\'enregistrement du choix de l\'équipe dans la base de données Firebase', error);
-        });
+          .then(() => {
+            console.log('Choix de l\'équipe enregistré dans la base de données Firebase');
+          })
+          .catch((error) => {
+            console.error('Erreur lors de l\'enregistrement du choix de l\'équipe dans la base de données Firebase', error);
+          });
+      }
     }
   };
 
   useEffect(() => {
     if (!window.ethereum || !window.ethereum.selectedAddress) {
-      router.push('https://stackblitzstarterspqmda2-oqiw--3000--e0a2bd6c.local-credentialless.webcontainer.io/');
+      router.push('/index');
     }
   }, [router]);
 
