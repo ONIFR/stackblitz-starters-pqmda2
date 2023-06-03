@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import firebase from 'firebase/app';
-import 'firebase/database';
 
 const TeamPage = () => {
   const [firebaseLoaded, setFirebaseLoaded] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    // Initialiser Firebase avec vos informations de configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyBcWPwQu2a1Kgx6LSg3e2s4yvzLKfSB0Jw",
+    // Charger le SDK Firebase via une CDN
+    const firebaseScript = document.createElement('script');
+    firebaseScript.src = 'https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js';
+    firebaseScript.onload = () => {
+      const databaseScript = document.createElement('script');
+      databaseScript.src = 'https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js';
+      databaseScript.onload = () => {
+        // Initialiser Firebase avec vos informations de configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBcWPwQu2a1Kgx6LSg3e2s4yvzLKfSB0Jw",
   authDomain: "theboringcube-f508a.firebaseapp.com",
   databaseURL: "https://theboringcube-f508a-default-rtdb.firebaseio.com",
   projectId: "theboringcube-f508a",
@@ -18,13 +23,14 @@ const TeamPage = () => {
   messagingSenderId: "1022151595258",
   appId: "1:1022151595258:web:75f874855c2a887fb32543",
   measurementId: "G-YYN18C1SR5"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        setFirebaseLoaded(true);
+      };
+      document.head.appendChild(databaseScript);
     };
-
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-    }
-
-    setFirebaseLoaded(true);
+    document.head.appendChild(firebaseScript);
   }, []);
 
   const confirmTeamSelection = (teamName) => {
