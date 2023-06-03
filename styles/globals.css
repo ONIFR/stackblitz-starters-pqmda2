@@ -14,3 +14,39 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* Centre le contenu de la page */
+#team-selection-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styles pour chaque équipe */
+.team-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.team-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.team-image {
+  width: 40%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.team-button {
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+/* Masque l'élément initiallement */
+.hidden {
+  display: none;
+}

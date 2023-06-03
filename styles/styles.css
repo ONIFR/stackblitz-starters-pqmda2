@@ -1,19 +1,37 @@
-.hidden {
-  display: none;
+/* styles.css */
+
+/* Centre le contenu de la page */
+#team-selection-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Styles pour chaque équipe */
 .team-container {
-  /* styles pour le conteneur d'équipe */
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .team-title {
-  /* styles pour le titre de l'équipe */
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .team-image {
-  /* styles pour l'image de l'équipe */
+  width: 40%;
+  height: auto;
+  margin-bottom: 10px;
 }
 
 .team-button {
-  /* styles pour le bouton d'équipe */
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+/* Masque l'élément initiallement */
+.hidden {
+  display: none;
 }

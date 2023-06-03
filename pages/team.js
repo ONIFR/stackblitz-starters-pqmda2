@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import '../styles/globals.css'; // Chemin vers votre feuille de style
 
 const TeamPage = () => {
   const [isConnected, setIsConnected] = useState(false);
